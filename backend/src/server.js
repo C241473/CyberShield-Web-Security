@@ -26,10 +26,14 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', service: 'CyberShield Backend API', timestamp: new Date() });
 });
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`==================================================`);
-  console.log(`🛡️  CyberShield Defensive Security Server Running`);
-  console.log(`📡 URL: http://localhost:${PORT}`);
-  console.log(`==================================================`);
-});
+// Start Server locally if not running in serverless environment
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`==================================================`);
+    console.log(`🛡️  CyberShield Defensive Security Server Running`);
+    console.log(`📡 URL: http://localhost:${PORT}`);
+    console.log(`==================================================`);
+  });
+}
+
+module.exports = app;
